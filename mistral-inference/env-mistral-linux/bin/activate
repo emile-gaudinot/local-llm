@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/mnt/d/Documents/Mistral/mistral-inference/env-mistral-linux
+VIRTUAL_ENV=/mnt/d/Documents/local-llm/mistral-inference/env-mistral-linux
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

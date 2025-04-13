@@ -1,4 +1,4 @@
-#!/mnt/d/Documents/Mistral/mistral-inference/env-mistral-linux/bin/python3.11
+#!/mnt/d/Documents/local-llm/mistral-inference/env-mistral-linux/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
