@@ -3,4 +3,3 @@
 mistral_models/codestral-mamba-7B-v0.1/consolidated.safetensors
 mistral_models/mathstral-7B-v0.1/consolidated.safetensors
 mistral_models/Mistral-7B-Instruct-v0.1/consolidated.safetensors
-mistral-inference/
