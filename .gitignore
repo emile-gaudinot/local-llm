@@ -1,5 +1,6 @@
 # Ignore the weights: very heavy
 # run `git config http.postBuffer 15000000000` if I still want to push them
-./mistral_models/codestral-mamba-7B-v0.1/consolidated.safetensors
-./mistral_models/mathstral-7B-v0.1/consolidated.safetensors
-./mistral_models/Mistral-7B-Instruct-v0.1/consolidated.safetensors
+mistral_models/codestral-mamba-7B-v0.1/consolidated.safetensors
+mistral_models/mathstral-7B-v0.1/consolidated.safetensors
+mistral_models/Mistral-7B-Instruct-v0.1/consolidated.safetensors
+mistral-inference/

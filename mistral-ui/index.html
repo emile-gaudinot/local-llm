@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistral (local)</title>
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/night-owl.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <select id="model-selector">
+                <option value="Codestral">Codestral</option>
+                <option value="Mathstral">Mathstral</option>
+                <option value="Mistral7B" selected>Mistral7B</option>
+            </select>
+            <input type="text" id="prompt-input" placeholder="Ask a question...">
+            <select id="float-selector">
+                <option value="float32">float32</option>
+                <option value="bfloat16">bfloat16</option>
+                <option value="float16" selected>float16</option>
+                <option value="float8_e4m3fn">float8_e4m3fn</option>
+                <option value="float8_e5m2">float8_e5m2</option>
+            </select>
+        </div>
+        <button id="run-button">Ask</button>
+        <div id="output" class="hidden"></div>
+        <div id="executionTime"></div>
+    </div>
+    <script src="node_modules/marked/marked.min.js"></script>
+    <script src="node_modules/highlight.js/highlight.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
