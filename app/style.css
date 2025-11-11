@@ -1,0 +1,125 @@
+:root {
+    --orange: rgb(255, 77, 0);
+}
+
+body {
+    font-family: system-ui;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    width: 60%;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+input {
+    width: calc(100% - 22px); /* Adjust for padding */
+    background-color: #333;
+    color: #fff;
+}
+
+input:focus {
+    outline: 2px solid var(--orange);
+}
+
+input::placeholder {
+    font-family: 16px system-ui;
+}
+
+button {
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font: 16px system-ui;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+button.active {
+    background-color: var(--orange);
+}
+
+#output {
+    border: none;
+    border-radius: 15px;
+    padding: .8rem 1.6rem;
+    margin: 10px 0;
+    background-color: #2e2e2e;
+    overflow-x: auto;
+    max-height: 600px;
+    transition: opacity 0.3s ease;
+    text-align: left;
+}
+
+#executionTime {
+    font-family: monospace;
+    color: var(--orange);
+    margin-top: 1.5rem;
+    white-space: pre;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Style mardown code blocks */
+pre {
+    padding: 15px;
+    border: 1px solid rgb(0, 42, 76);
+    background-color: rgb(1 22 39);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#model-selector {
+    flex-shrink: 0;
+    width: 10em;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-family: system-ui;
+}
+
+#prompt-input {
+    flex-grow: 1;
+    width: auto; /* Allow flexbox to control the width */
+}
+
+#float-selector {
+    flex-shrink: 0;
+    width: 10em;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-family: system-ui;
+}
