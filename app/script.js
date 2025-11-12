@@ -27,9 +27,6 @@ async function runScript() {
 
     const outputElement = document.getElementById('output');
     const executionTimeElement = document.getElementById('executionTime');
-    outputElement.innerHTML = '';
-    outputElement.classList.remove('hidden');
-    executionTimeElement.textContent = '';
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
@@ -37,6 +34,9 @@ async function runScript() {
     let received = '';
     let done = false;
 
+    outputElement.innerHTML = '';
+    outputElement.classList.remove('hidden');
+    executionTimeElement.textContent = ' ';
     while (!done) {
         const { value, done: streamDone } = await reader.read();
         if (value) {
