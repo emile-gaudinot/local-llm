@@ -19,42 +19,42 @@ marked.setOptions({
 });
 
 async function runScript() {
-    // Button orange
     const button = document.getElementById('run-button');
     button.classList.add('active');
 
-    // Get selected model name, float precision, and prompt
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
 
-    // Fetch result from backend
-    var data = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
-    data = await data.text();
-    console.log('data');
-    console.log(data);
-
-    // Get execution time
-    const splitted = data.split('\n')
-    splitted.pop()
-    const executionTime = splitted.pop()
-    data = splitted.join('\n');
-    
-    // Convert Markdown to HTML and display the output
     const outputElement = document.getElementById('output');
     const executionTimeElement = document.getElementById('executionTime');
-    outputElement.innerHTML = marked.parse(data);
+    outputElement.innerHTML = '';
     outputElement.classList.remove('hidden');
-    
-    // Add execution time at the end of the output
-    executionTimeElement.textContent = executionTime;
-    
-    // Reset button color
+    executionTimeElement.textContent = '';
+
+    const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let received = '';
+    let done = false;
+
+    while (!done) {
+        const { value, done: streamDone } = await reader.read();
+        if (value) {
+            const chunk = decoder.decode(value, { stream: !streamDone });
+            if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
+                executionTimeElement.textContent = chunk.trim();
+                continue;
+            };
+            received += chunk;
+            outputElement.innerHTML = marked.parse(received);
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        }
+        done = streamDone;
+    }
+
     button.classList.remove('active');
-    
-    // Apply syntax highlighting
-    document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightBlock(block);
-    });
 }
 
 // Populate model selector from model_names.txt
@@ -78,5 +78,4 @@ async function populateModelSelector() {
         console.error('Failed to load models:', error);
     }
 }
-
 populateModelSelector();
