@@ -4,6 +4,9 @@
 ![Python](https://img.shields.io/badge/Python-3.13-green)
 ![Ollama](https://img.shields.io/badge/Ollama-0.6.0-purple)
 
+<img width="1461" height="752" alt="image" src="https://github.com/user-attachments/assets/9827cffd-b189-4b3e-aaa7-113a0f384d88" />
+<br>
+<br>
 This project enables to run open-source large language models (LLMs) locally using Ollama, with user-friendly web interface.
 It works well with lightweight models, making it perfect for running it on its own local machine.
 
@@ -27,7 +30,8 @@ python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
-Set Ollama download folder to *local-llm\ollama-models\*.
+Set Ollama download folder to `local-llm\ollama-models\`.
+
 Download a model (see all [Ollama models](https://ollama.com/search)):
 ```bash
 ollama pull mistral:7b
