@@ -18,31 +18,46 @@ body {
     width: 60%;
 }
 
-input, button {
+#prompt-input, button {
     margin: 10px 0;
     padding: 10px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
 }
 
-input {
-    width: calc(100% - 22px); /* Adjust for padding */
+#prompt-input {
+    flex-grow: 1;
+    width: auto;
+    min-height: 3.5em;
+    max-height: 15em;
+    padding: 15px;
+    margin-top: 1.5em;
+    resize: none;
+    font-family: system-ui;
+    line-height: 1.4;
+    box-sizing: border-box;
     background-color: #333;
     color: #fff;
+    overflow-y: auto;
+    outline: 2px solid #333;
+    border-radius: 10px;
+    /* Prevent horizontal overflow */
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
-input:focus {
+#prompt-input:focus {
     outline: 2px solid var(--orange);
 }
 
-input::placeholder {
+#prompt-input::placeholder {
     font-family: 16px system-ui;
 }
 
 button {
     background-color: #555;
     color: #fff;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font: 16px system-ui;
@@ -63,7 +78,7 @@ button.active {
     margin: 10px 0;
     background-color: #2e2e2e;
     overflow-x: auto;
-    max-height: 600px;
+    max-height: 65vh;
     transition: opacity 0.3s ease;
     text-align: left;
 }
@@ -72,6 +87,7 @@ button.active {
     font-family: monospace;
     color: var(--orange);
     margin-top: 1.5rem;
+    margin-bottom: 1.5em;
     white-space: pre;
 }
 
@@ -90,14 +106,13 @@ pre {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
 }
 
 #model-selector {
     flex-shrink: 0;
     width: 10em;
     margin: 10px 0;
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -106,9 +121,10 @@ pre {
     font-family: system-ui;
 }
 
-#prompt-input {
-    flex-grow: 1;
-    width: auto; /* Allow flexbox to control the width */
+.button-group {
+    display: flex; gap: 8px;
+    justify-content: center;
+    align-items: center;
 }
 
 #float-selector {

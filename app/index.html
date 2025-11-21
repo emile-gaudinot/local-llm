@@ -8,15 +8,18 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules/highlight.js/styles/night-owl.min.css">
 </head>
+
 <body>
     <div class="container">
         <div class="input-group">
+            <textarea id="prompt-input" placeholder="Ask a question..." rows="1"></textarea>
+        </div>
+        <div class="button-group">
             <select id="model-selector">
                 <!-- Options are populated dynamically -->
             </select>
-            <input type="text" id="prompt-input" placeholder="Ask a question...">
+            <button id="run-button">Ask</button>
         </div>
-        <button id="run-button">Ask</button>
         <div id="output" class="hidden"></div>
         <div id="executionTime"></div>
     </div>

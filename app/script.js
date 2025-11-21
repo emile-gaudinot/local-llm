@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('prompt-input').focus();
+    // Auto-resize textarea on input
+    const promptInput = document.getElementById('prompt-input');
+    function autoResize() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }
+    promptInput.addEventListener('input', autoResize);
+    // Initial resize in case of pre-filled value
+    autoResize.call(promptInput);
 });
 
 document.getElementById('run-button').addEventListener('click', runScript);
 document.getElementById('prompt-input').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault(); // Prevent form submission if inside a form
         runScript();
     }
@@ -30,7 +39,8 @@ async function runScript() {
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+    const decoder = new TextDecoder('utf-8');
+    // const decoder = new TextDecoder('windows-1252'); // default windows encoding
     let received = '';
     let done = false;
 
