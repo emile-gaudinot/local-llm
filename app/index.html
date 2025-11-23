@@ -18,7 +18,13 @@
             <select id="model-selector">
                 <!-- Options are populated dynamically -->
             </select>
-            <button id="run-button">Ask</button>
+            <button id="run-button">Ask
+                <div id="loader" class="hidden">
+                    <div class="inner one"></div>
+                    <div class="inner two"></div>
+                    <div class="inner three"></div>
+                </div>
+            </button>
         </div>
         <div id="output" class="hidden"></div>
         <div id="executionTime"> </div>

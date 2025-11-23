@@ -30,6 +30,8 @@ marked.setOptions({
 async function runScript() {
     const button = document.getElementById('run-button');
     button.classList.add('active');
+    const loader = document.getElementById('loader');
+    loader.classList.remove('hidden');
 
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
@@ -67,6 +69,7 @@ async function runScript() {
     }
 
     button.classList.remove('active');
+    loader.classList.add('hidden');
 }
 
 // Populate model selector from model_names.txt
