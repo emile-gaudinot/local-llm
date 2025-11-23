@@ -6,16 +6,22 @@ const tmp = require('tmp');
 const app = express();
 const PORT = 3000;
 
+
+// Create temp file for messages
+const tmpobj = tmp.fileSync({ postfix: '.json' });
+const messagesPath = tmpobj.name;
+let messages = [];
+
 app.use(express.static(path.join(__dirname)));
 
 app.get('/run-script', (req, res) => {
     const model_name = req.query.model_name || '';
     const prompt = req.query.prompt || '';
     const command = 'python';
-    // Create temp file for messages
-    const tmpobj = tmp.fileSync({ postfix: '.json' });
-    const messagesPath = tmpobj.name;
     const args = ['script.py', model_name, messagesPath];
+
+    // Write messages to temp file
+    fs.writeFileSync(messagesPath, JSON.stringify(messages), 'utf-8');
     
     const child = spawn(command, args, { shell: false });
     child.stdin.write(prompt);  // Input is passed as raw text to the python script
@@ -32,8 +38,9 @@ app.get('/run-script', (req, res) => {
     child.on('close', (code) => {
         // Read messages from temp file and send as header
         fs.readFile(messagesPath, 'utf-8', (err, data) => {
-            console.log(`messages: ${data}, messagesPath: ${messagesPath}`);
+            messages.push(...JSON.parse(data))
             tmpobj.removeCallback();
+            res.end(); // Ensure the response stream is closed
         });
     });
     child.on('error', (err) => {

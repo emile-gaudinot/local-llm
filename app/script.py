@@ -8,13 +8,14 @@ import json
 import tempfile
 
 
-def main(model_name, messages_path=None):
+def main(model_name, messages_path):
 
-    messages = []
     prompt = sys.stdin.read()
+    # Load previous messages if exists
+    with open(messages_path, 'r', encoding='utf-8') as f:
+        messages = json.load(f)
     
     if prompt.lower() != 'exit':  
-        print(f'{prompt = }')
         elapsed_time = time.time()
         messages += [
             {'role': 'user', 'content': prompt}
@@ -36,7 +37,7 @@ def main(model_name, messages_path=None):
         ]  
         # Write messages to temp file
         with open(messages_path, 'w', encoding='utf-8') as f:
-            json.dump(messages, f, ensure_ascii=False, indent=2)
+            json.dump(messages[-2:], f, ensure_ascii=False, indent=2)
 
     # Print time
     elapsed_time = time.time() - elapsed_time

@@ -33,9 +33,12 @@ async function runScript() {
 
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
+    document.getElementById('prompt-input').value = '';
 
     const outputElement = document.getElementById('output');
+    outputElement.classList.add('hidden');
     const executionTimeElement = document.getElementById('executionTime');
+    executionTimeElement.textContent = ' ';
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
@@ -44,9 +47,8 @@ async function runScript() {
     let received = '';
     let done = false;
 
-    outputElement.innerHTML = '';
     outputElement.classList.remove('hidden');
-    executionTimeElement.textContent = ' ';
+    outputElement.innerHTML = '';
     while (!done) {
         const { value, done: streamDone } = await reader.read();
         if (value) {
