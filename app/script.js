@@ -30,9 +30,17 @@ marked.setOptions({
     }
 });
 
-function addHistory(historyDiv, content, prompt = true) {
+function addHistory(historyDiv, content, type) {
     const elem = document.createElement('div');
-    elem.className = prompt ? 'history-prompt' : 'history-answer';
+    if (type === 'prompt') {
+        elem.className = 'history-prompt';
+    }
+    else if (type === 'answer') {
+        elem.className = 'history-answer';
+    }
+    else if (type === 'time') {
+        elem.className = 'execution-time';
+    }
     elem.textContent = content;
     historyDiv.appendChild(elem);
 }
@@ -45,20 +53,20 @@ async function runScript() {
 
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
-    addHistory(historyDiv, prompt, true);
+    addHistory(historyDiv, prompt, 'prompt');
     document.getElementById('prompt-input').value = '';
 
     // const outputElement = document.getElementById('output');
     // outputElement.classList.add('hidden');
-    const executionTimeElement = document.getElementById('executionTime');
-    executionTimeElement.textContent = ' ';
+    // const executionTimeElement = document.getElementById('executionTime');
+    // executionTimeElement.textContent = ' ';
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     // const decoder = new TextDecoder('windows-1252'); // default windows encoding
 
-    addHistory(historyDiv, '', false);
+    addHistory(historyDiv, '', 'answer');
     const lastAnswer = historyDiv.lastElementChild;
     let received = '';
     let done = false;
@@ -70,7 +78,7 @@ async function runScript() {
         if (value) {
             const chunk = decoder.decode(value, { stream: !streamDone });
             if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
-                executionTimeElement.textContent = chunk.trim();
+                addHistory(historyDiv, chunk.trim(), 'time');
                 continue;
             };
             received += chunk;
