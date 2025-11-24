@@ -1,3 +1,6 @@
+const historyDiv = document.getElementById('history');
+// historyDiv.innerHTML = '';
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('prompt-input').focus();
     // Auto-resize textarea on input
@@ -27,6 +30,13 @@ marked.setOptions({
     }
 });
 
+function addHistory(historyDiv, content, prompt = true) {
+    const elem = document.createElement('div');
+    elem.className = prompt ? 'history-prompt' : 'history-answer';
+    elem.textContent = content;
+    historyDiv.appendChild(elem);
+}
+
 async function runScript() {
     const button = document.getElementById('run-button');
     button.classList.add('active');
@@ -35,10 +45,11 @@ async function runScript() {
 
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
+    addHistory(historyDiv, prompt, true);
     document.getElementById('prompt-input').value = '';
 
-    const outputElement = document.getElementById('output');
-    outputElement.classList.add('hidden');
+    // const outputElement = document.getElementById('output');
+    // outputElement.classList.add('hidden');
     const executionTimeElement = document.getElementById('executionTime');
     executionTimeElement.textContent = ' ';
 
@@ -46,11 +57,14 @@ async function runScript() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     // const decoder = new TextDecoder('windows-1252'); // default windows encoding
+
+    addHistory(historyDiv, '', false);
+    const lastAnswer = historyDiv.lastElementChild;
     let received = '';
     let done = false;
 
-    outputElement.classList.remove('hidden');
-    outputElement.innerHTML = '';
+    // outputElement.classList.remove('hidden');
+    // outputElement.innerHTML = '';
     while (!done) {
         const { value, done: streamDone } = await reader.read();
         if (value) {
@@ -60,7 +74,7 @@ async function runScript() {
                 continue;
             };
             received += chunk;
-            outputElement.innerHTML = marked.parse(received);
+            lastAnswer.innerHTML = marked.parse(received);
             document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightBlock(block);
             });

@@ -74,18 +74,6 @@ button.active {
     color: var(--orange);
 }
 
-#output {
-    border: none;
-    border-radius: 15px;
-    padding: .8rem 1.6rem;
-    margin: 10px 0;
-    background-color: #2e2e2e;
-    overflow-x: auto;
-    max-height: 65vh;
-    transition: opacity 0.3s ease;
-    text-align: left;
-}
-
 #executionTime {
     font-family: monospace;
     color: var(--orange);
@@ -113,7 +101,7 @@ pre {
 
 #model-selector {
     flex-shrink: 0;
-    width: 10em;
+    width: 12em;
     margin: 10px 0;
     padding: 10px;
     font-size: 16px;
@@ -208,4 +196,29 @@ pre {
     100% {
     transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
     }
+}
+
+/* Chat messages */
+
+#history {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-prompt {
+    display: inline-block;
+    max-width: 100%;
+    border-radius: 15px 15px 0 15px;
+    padding: .8rem 1.2rem;
+    margin: 2.5em 0 0;
+    background-color: #2e2e2e;
+    overflow-x: auto;
+    transition: display 0.3s ease;
+    align-self: flex-end;
+}
+
+.history-answer {
+    color: white;
+    align-self: flex-start;
 }
