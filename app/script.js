@@ -1,5 +1,4 @@
 const historyDiv = document.getElementById('history');
-// historyDiv.innerHTML = '';
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('prompt-input').focus();
@@ -50,16 +49,13 @@ async function runScript() {
     button.classList.add('active');
     const loader = document.getElementById('loader');
     loader.classList.remove('hidden');
+    const buttonGroup = document.getElementById('button-group');
+    buttonGroup.style.marginBottom = '2em';
 
     const model_name = document.getElementById('model-selector').value;
     const prompt = document.getElementById('prompt-input').value;
     addHistory(historyDiv, prompt, 'prompt');
     document.getElementById('prompt-input').value = '';
-
-    // const outputElement = document.getElementById('output');
-    // outputElement.classList.add('hidden');
-    // const executionTimeElement = document.getElementById('executionTime');
-    // executionTimeElement.textContent = ' ';
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
@@ -71,8 +67,6 @@ async function runScript() {
     let received = '';
     let done = false;
 
-    // outputElement.classList.remove('hidden');
-    // outputElement.innerHTML = '';
     while (!done) {
         const { value, done: streamDone } = await reader.read();
         if (value) {

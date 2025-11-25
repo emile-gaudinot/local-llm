@@ -6,16 +6,18 @@ body {
     font-family: system-ui;
     background-color: #1e1e1e;
     color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    overflow-y: auto;
 }
 
 .container {
     text-align: center;
     width: 50%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0 auto;
 }
 
 #prompt-input, button {
@@ -31,7 +33,7 @@ body {
     min-height: 3.5em;
     max-height: 15em;
     padding: 15px;
-    margin-top: 1.5em;
+    margin-top: 4em;
     resize: none;
     font-family: system-ui;
     line-height: 1.4;
@@ -98,6 +100,7 @@ pre {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin-top: auto;
 }
 
 #model-selector {
@@ -113,10 +116,12 @@ pre {
     font-family: system-ui;
 }
 
-.button-group {
+#button-group {
     display: flex; gap: 8px;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40vh;
+    transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 #float-selector {
