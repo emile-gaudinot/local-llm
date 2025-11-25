@@ -2,12 +2,16 @@
     --orange: rgb(255, 77, 0);
 }
 
+html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
 body {
     font-family: system-ui;
     background-color: #1e1e1e;
     color: #ffffff;
     margin: 0;
-    overflow-y: auto;
 }
 
 .container {
