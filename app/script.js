@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const promptInput = document.getElementById('prompt-input');
     function autoResize() {
         this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
+        this.style.height = (this.scrollHeight+1) + 'px';
     }
     promptInput.addEventListener('input', autoResize);
     // Initial resize in case of pre-filled value
@@ -59,9 +59,11 @@ async function runScript() {
     buttonGroup.style.marginBottom = '2em';
 
     const model_name = document.getElementById('model-selector').value;
-    const prompt = document.getElementById('prompt-input').value;
+    const promptInput = document.getElementById('prompt-input');
+    const prompt = promptInput.value;
     addHistory(historyDiv, prompt, 'prompt');
-    document.getElementById('prompt-input').value = '';
+    promptInput.value = '';
+    promptInput.style.height = 'auto';
     scrollDown();
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
