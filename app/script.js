@@ -44,6 +44,12 @@ function addHistory(historyDiv, content, type) {
     historyDiv.appendChild(elem);
 }
 
+function scrollDown() {
+    requestAnimationFrame(() => {
+        document.documentElement.scrollTop = document.documentElement.scrollHeight;
+    });
+}
+
 async function runScript() {
     const button = document.getElementById('run-button');
     button.classList.add('active');
@@ -56,6 +62,7 @@ async function runScript() {
     const prompt = document.getElementById('prompt-input').value;
     addHistory(historyDiv, prompt, 'prompt');
     document.getElementById('prompt-input').value = '';
+    scrollDown();
 
     const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
     const reader = response.body.getReader();
@@ -73,6 +80,7 @@ async function runScript() {
             const chunk = decoder.decode(value, { stream: !streamDone });
             if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
                 addHistory(historyDiv, chunk.trim(), 'time');
+                scrollDown();
                 continue;
             };
             received += chunk;
@@ -80,6 +88,7 @@ async function runScript() {
             document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightBlock(block);
             });
+            scrollDown();
         }
         done = streamDone;
     }
