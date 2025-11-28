@@ -1,5 +1,5 @@
 ﻿gemma3:12b
-gemma3:270m
 gemma3:4b
+llama3:8b
 mistral:7b
 mistral-nemo:12b

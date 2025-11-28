@@ -5,6 +5,7 @@
 html {
     overflow-y: auto;
     scrollbar-gutter: stable;
+    scrollbar-color: #626262 transparent;
 }
 
 body {
@@ -231,4 +232,5 @@ pre {
 .history-answer {
     color: white;
     align-self: flex-start;
+    width: 100%;
 }

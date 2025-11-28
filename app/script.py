@@ -42,7 +42,7 @@ def main(model_name, messages_path):
     # Print time
     elapsed_time = time.time() - elapsed_time
     minutes, seconds = divmod(elapsed_time, 60)
-    execution_time = f"\n{int(minutes)}min {int(seconds)}s"
+    execution_time = f" \n{int(minutes)}min {int(seconds)}s"
     print(execution_time, ' | ', model_name)
 
 
