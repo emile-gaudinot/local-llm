@@ -47,9 +47,11 @@ app.get('/run-script', (req, res) => {
         // Read messages from temp file and send as header
         fs.readFile(messages_path, 'utf-8', (err, data) => {
             messages.push(...JSON.parse(data))
-            tmpobj.removeCallback();
-            res.end(); // Ensure the response stream is closed
         });
+        console.log(`Tmp file path: ${messages_path}`);
+        tmpobj.removeCallback();
+        res.end(); // Ensure the response stream is closed
+        fs.unlink(file_path, () => {});
     });
     child.on('error', (err) => {
         console.error(`Error executing script: ${err.message}`);
