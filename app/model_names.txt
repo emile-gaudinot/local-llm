@@ -1,5 +1,6 @@
 ﻿gemma3:12b
 gemma3:4b
-llama3:8b
+llama3.1:8b
+ministral-3:8b
 mistral:7b
 mistral-nemo:12b

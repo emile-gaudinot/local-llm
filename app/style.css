@@ -67,8 +67,7 @@ button {
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    /* transition: color 0.3s ease; */
+    transition: background-color 0.3s ease, color 0.3s ease;
     font: 16px system-ui;
 }
 
@@ -144,13 +143,28 @@ pre {
 
 /* Loading button */
 
-#loader {
+#loader, #paperclip {
     position: absolute;
-    top: 0.6em;
     width: 25px;
     height: 25px;
-    border-radius: 50%;
     perspective: 800px;
+}
+
+#loader {
+    border-radius: 50%;
+    top: 0.6em;
+}
+
+#paperclip {
+    left: 0.6em;
+}
+
+#selectFileBtn {
+    color: #555;
+}
+
+#selectFileBtn:hover {
+    color: #666;
 }
 
 .inner {

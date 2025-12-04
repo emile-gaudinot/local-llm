@@ -13,6 +13,30 @@ document.addEventListener('DOMContentLoaded', function() {
     autoResize.call(promptInput);
 });
 
+// Manage any file upload
+const selectFileBtn = document.getElementById('selectFileBtn');
+const fileInput = document.getElementById('fileInput');
+let file = null;
+let uploadedFilePath = '';
+selectFileBtn.addEventListener('click', () => {
+    fileInput.click();
+});
+fileInput.addEventListener('change', async (event) => {
+    file = event.target.files[0];
+    if (file) {
+        // Upload the file to the backend
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/upload-file', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        uploadedFilePath = data.path; // server-side path
+    }
+    document.getElementById('prompt-input').focus();
+});
+
 document.getElementById('run-button').addEventListener('click', runScript);
 document.getElementById('prompt-input').addEventListener('keydown', function(event) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -24,7 +48,9 @@ document.getElementById('prompt-input').addEventListener('keydown', function(eve
 // Configure marked to use highlight.js
 marked.setOptions({
     highlight: function(code, lang) {
-        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+        // fallback to plaintext if language is not supported or is 'latex'
+        // const language = hljs.getLanguage(lang) && lang !== 'latex' ? lang : 'plaintext';
+        const language = hljs.getLanguage(lang);
         return hljs.highlight(code, { language }).value;
     }
 });
@@ -66,7 +92,7 @@ async function runScript() {
     promptInput.style.height = 'auto';
     scrollDown();
 
-    const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}`);
+    const response = await fetch(`/run-script?model_name=${encodeURIComponent(model_name)}&prompt=${encodeURIComponent(prompt)}&file_path=${encodeURIComponent(uploadedFilePath)}`);
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     // const decoder = new TextDecoder('windows-1252'); // default windows encoding
@@ -81,6 +107,7 @@ async function runScript() {
         if (value) {
             const chunk = decoder.decode(value, { stream: !streamDone });
             if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
+                // console.log('Execution time chunk:', chunk.trim());
                 addHistory(historyDiv, chunk.trim(), 'time');
                 scrollDown();
                 continue;
