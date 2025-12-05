@@ -148,3 +148,9 @@ async function populateModelSelector() {
     }
 }
 populateModelSelector();
+
+// Exit on trash button click
+document.getElementById("trashBtn").addEventListener("click", async function() {
+    await fetch('/exit', { method: 'POST' });
+    window.close();
+});

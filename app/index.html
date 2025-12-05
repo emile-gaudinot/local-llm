@@ -10,16 +10,19 @@
 </head>
 
 <body>
+    <button id="trashBtn">As
+        <img id="trash" src="assets/trash.png" alt="Trash icon" />
+    </button>
     <div class="container">
         <div id="history"></div>
         <div class="input-group">
             <textarea id="prompt-input" placeholder="Ask a question..." rows="1"></textarea>
         </div>
         <div id="button-group">
-            <button id="selectFileBtn">Ask
+            <button id="selectFileBtn">As
                 <img id="paperclip" src="assets/paperclip.png" alt="File upload icon" />
             </button>
-            <input type="file" id="fileInput" style="display: none;">
+            <input type="file" id="fileInput" accept=".jpg, .jpeg, .png, .pdf, .docx, .pptx" style="display: none;">
             <select id="model-selector">
                 <!-- Options are populated dynamically -->
             </select>

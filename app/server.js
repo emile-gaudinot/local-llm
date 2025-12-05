@@ -2,16 +2,13 @@ const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
-const tmp = require('tmp');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'files/' });
 const app = express();
 const PORT = 3000;
 
-
-// Create temp file for messages
-const tmpobj = tmp.fileSync({ postfix: '.json' });
-const messages_path = tmpobj.name;
+const messages_path = './files/messages.json';
+fs.writeFileSync(messages_path, '[]', 'utf-8');
 let messages = [];
 
 app.use(express.static(path.join(__dirname)));
@@ -28,7 +25,7 @@ app.get('/run-script', (req, res) => {
     const command = 'python';
     const args = ['script.py', model_name, messages_path, file_path];
 
-    // Write messages to temp file
+    // Write messages to file
     fs.writeFileSync(messages_path, JSON.stringify(messages), 'utf-8');
     
     const child = spawn(command, args, { shell: false });
@@ -44,14 +41,12 @@ app.get('/run-script', (req, res) => {
         console.error(`Script stderr: ${data}`);
     });
     child.on('close', (code) => {
-        // Read messages from temp file and send as header
+        // Read messages from file and send as header
         fs.readFile(messages_path, 'utf-8', (err, data) => {
             messages.push(...JSON.parse(data))
         });
-        console.log(`Tmp file path: ${messages_path}`);
-        tmpobj.removeCallback();
         res.end(); // Ensure the response stream is closed
-        fs.unlink(file_path, () => {});
+        fs.unlink(messages_path, () => {});
     });
     child.on('error', (err) => {
         console.error(`Error executing script: ${err.message}`);
@@ -59,6 +54,17 @@ app.get('/run-script', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Add shutdown endpoint
+app.post('/exit', (req, res) => {
+    res.send('Exiting');
+    // Delete all files in files/ directory
+    fs.readdirSync('./files/').forEach(file => {
+        fs.unlinkSync(path.join('./files/', file));
+    });
+    process.exit();
+});
+

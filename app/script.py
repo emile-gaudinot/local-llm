@@ -2,14 +2,12 @@ import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import time
-from ollama import chat
-from ollama import ChatResponse
+from ollama import chat, ChatResponse
 import json
+import magic
 from PyPDF2 import PdfReader
 from pdf2image import convert_from_path
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # to avoid adding it in Path
-import magic
 from PIL import Image
 from docx import Document
 from pptx import Presentation
@@ -84,6 +82,7 @@ def update_messages(messages, prompt, file_path):
             {'role': 'user', 'content': prompt + pptx_text}
         ]
     elif file_type in ['image/png', 'image/jpeg', 'image/jpg']:
+        # open the image file
         messages += [
             {'role': 'user', 'content': prompt, 'images': [file_path]},
         ]

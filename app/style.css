@@ -156,7 +156,8 @@ pre {
 }
 
 #paperclip {
-    left: 0.6em;
+    left: 0.35em;
+    top: 0.55em;
 }
 
 #selectFileBtn {
@@ -247,4 +248,28 @@ pre {
     color: white;
     align-self: flex-start;
     width: 100%;
+}
+
+#trashBtn {
+    position: fixed;
+    top: 1.5em;
+    left: 1.5em;
+    padding: .5em;
+    margin: 0;
+    cursor: pointer;
+    background-color: transparent;
+    color: transparent;
+    border-radius: .5em;
+}
+
+#trashBtn:hover {
+    background-color: #333;
+}
+
+#trash {
+    position: absolute;
+    width: 1.6em;
+    height: 1.6em;
+    left: .25em;
+    top: .35em;
 }

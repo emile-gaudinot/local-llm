@@ -1,7 +1,8 @@
 # Ignore the envs and packages
 app/venv/*
 app/node_modules/*
-app/uploads/*
+app/files/*
 
 # Ignore the models and weights
 ollama-models/*
+app/model_names.txt
