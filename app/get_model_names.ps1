@@ -12,4 +12,3 @@ foreach ($folder in $subfolders) {
 
 # Write to model_names.txt
 $output | Out-File -FilePath .\model_names.txt -Encoding UTF8
-Write-Host "Model names written to model_names.txt"
