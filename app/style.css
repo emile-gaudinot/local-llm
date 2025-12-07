@@ -161,11 +161,11 @@ pre {
 }
 
 #selectFileBtn {
-    color: #555;
+    color: transparent;
 }
 
 #selectFileBtn:hover {
-    color: #666;
+    color: transparent;
 }
 
 .inner {

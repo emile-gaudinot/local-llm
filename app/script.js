@@ -24,6 +24,12 @@ selectFileBtn.addEventListener('click', () => {
 fileInput.addEventListener('change', async (event) => {
     file = event.target.files[0];
     if (file) {
+        if (file !== '') {
+            selectFileBtn.style.backgroundColor = 'var(--orange)';
+        }
+        else {
+            selectFileBtn.style.backgroundColor = '#555';
+        }
         // Upload the file to the backend
         const formData = new FormData();
         formData.append('file', file);
