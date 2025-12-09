@@ -93,8 +93,6 @@ def update_messages(messages, prompt, file_path):
     return messages
 
 def main(model_name, messages_path, file_path):
-    elapsed_time = time.time()
-
     prompt = sys.stdin.read()
     # Load previous messages if exists
     with open(messages_path, 'r', encoding='utf-8') as f:
@@ -120,12 +118,6 @@ def main(model_name, messages_path, file_path):
     # Write messages to temp file
     with open(messages_path, 'w', encoding='utf-8') as f:
         json.dump(messages[-2:], f, ensure_ascii=False, indent=2)
-
-    # Print time
-    elapsed_time = time.time() - elapsed_time
-    minutes, seconds = divmod(elapsed_time, 60)
-    execution_time = f"\n{int(minutes)}min {int(seconds)}s"
-    print(execution_time, ' | ', model_name)
 
 
 if __name__ == '__main__':

@@ -86,6 +86,8 @@ function scrollDown() {
 }
 
 async function runScript() {
+    const startTime = performance.now();
+
     const button = document.getElementById('run-button');
     button.classList.add('active');
     const loader = document.getElementById('loader');
@@ -114,12 +116,11 @@ async function runScript() {
         const { value, done: streamDone } = await reader.read();
         if (value) {
             const chunk = decoder.decode(value, { stream: !streamDone });
-            if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
-                // console.log('Execution time chunk:', chunk.trim());
-                addHistory(historyDiv, chunk.trim(), 'time');
-                scrollDown();
-                continue;
-            };
+            // if (chunk.trim().includes(model_name) && chunk.trim().includes('min') && chunk.trim().includes('s') && chunk.trim().includes(' | ')) {
+            //     addHistory(historyDiv, chunk.trim(), 'time');
+            //     scrollDown();
+            //     continue;
+            // };
             received += chunk;
             lastAnswer.innerHTML = marked.parse(received);
             document.querySelectorAll('pre code').forEach((block) => {
@@ -129,6 +130,12 @@ async function runScript() {
         }
         done = streamDone;
     }
+    // Execution time
+    const elapsedTime = (performance.now() - startTime) / 1000;
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = Math.floor(elapsedTime % 60);
+    addHistory(historyDiv, `${minutes}min ${seconds}s  |  ${model_name}`, 'time');
+    scrollDown();
 
     button.classList.remove('active');
     loader.classList.add('hidden');
