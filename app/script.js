@@ -1,16 +1,15 @@
 const historyDiv = document.getElementById('history');
+const promptInput = document.getElementById('prompt-input');
+let prompt = '';
+
+function autoResize() {
+    this.style.height = 'auto';  // Reset height to auto to recalculate scrollHeight
+    this.style.height = (this.scrollHeight+1) + 'px';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('prompt-input').focus();
-    // Auto-resize textarea on input
-    const promptInput = document.getElementById('prompt-input');
-    function autoResize() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight+1) + 'px';
-    }
     promptInput.addEventListener('input', autoResize);
-    // Initial resize in case of pre-filled value
-    autoResize.call(promptInput);
+    promptInput.focus();
 });
 
 // Manage any file upload
@@ -40,14 +39,18 @@ fileInput.addEventListener('change', async (event) => {
         const data = await res.json();
         uploadedFilePath = data.path; // server-side path
     }
-    document.getElementById('prompt-input').focus();
+    promptInput.focus();
 });
 
 document.getElementById('run-button').addEventListener('click', runScript);
-document.getElementById('prompt-input').addEventListener('keydown', function(event) {
+promptInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault(); // Prevent form submission if inside a form
         runScript();
+    }
+    else if (event.key === 'ArrowUp' && prompt !== '') {
+        promptInput.value = prompt;
+        promptInput.selectionStart = promptInput.value.length;
     }
 });
 
@@ -90,9 +93,8 @@ async function runScript() {
     const buttonGroup = document.getElementById('button-group');
     buttonGroup.style.marginBottom = '2em';
 
-    const model_name = document.getElementById('model-selector').value;
-    const promptInput = document.getElementById('prompt-input');
-    const prompt = promptInput.value;
+    const model_name = document.getElementById('model-selector').value.replace(' ✦', '');
+    prompt = promptInput.value;
     addHistory(historyDiv, prompt, 'prompt');
     promptInput.value = '';
     promptInput.style.height = 'auto';
