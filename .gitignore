@@ -6,3 +6,6 @@ app/files/*
 # Ignore the models and weights
 ollama-models/*
 app/model_names.txt
+
+# Other
+local-llm.ps1
