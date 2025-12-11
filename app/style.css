@@ -242,7 +242,7 @@ pre {
     overflow-x: auto;
     transition: display 0.3s ease;
     align-self: flex-end;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .history-answer {
