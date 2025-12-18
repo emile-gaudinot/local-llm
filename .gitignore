@@ -8,5 +8,4 @@ ollama-models/*
 app/model_names.txt
 
 # Other
-.\local-llm.ps1
 local-llm.ps1
