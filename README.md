@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.13-green)](https://www.python.org/)
 [![Ollama](https://img.shields.io/badge/Ollama-0.6.0-purple)](https://ollama.com/)
 
-<img width="1461" height="752" alt="image" src="https://github.com/user-attachments/assets/9827cffd-b189-4b3e-aaa7-113a0f384d88" />
+<img width="1907" height="953" alt="image" src="https://github.com/user-attachments/assets/0bfca46a-a72e-436a-9213-d227da92e2d5" />
 <br>
 <br>
 This project enables to run open-source large language models locally using Ollama, with user-friendly web interface.
