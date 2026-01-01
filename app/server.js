@@ -11,6 +11,10 @@ const messages_path = './files/messages.json';
 fs.writeFileSync(messages_path, '[]', 'utf-8');
 let messages = [];
 
+const server = app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
 app.use(express.static(path.join(__dirname)));
 
 app.post('/upload-file', upload.single('file'), (req, res) => {
@@ -52,10 +56,6 @@ app.get('/run-script', (req, res) => {
         console.error(`Error executing script: ${err.message}`);
         res.status(500).end('Error executing script');
     });
-});
-
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 // Add shutdown endpoint
