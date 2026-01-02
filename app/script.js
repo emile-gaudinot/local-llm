@@ -10,6 +10,11 @@ function autoResize() {
 document.addEventListener('DOMContentLoaded', function() {
     promptInput.addEventListener('input', autoResize);
     promptInput.focus();
+    populateModelSelector();
+    fetch('/detect-vision-models').then(() => {
+        populateModelSelector();
+    })
+    .catch(err => console.error('Error detecting vision models:', err)); 
 });
 
 // Manage any file upload
@@ -144,7 +149,7 @@ async function runScript() {
 // Populate model selector from model_names.txt
 async function populateModelSelector() {
     try {
-        const response = await fetch('./model_names.txt');
+        const response = await fetch(`./model_names.txt?ts=${Date.now()}`);
         const text = await response.text();
         const models = text.trim().split('\n').filter(line => line.trim());
         
@@ -162,7 +167,6 @@ async function populateModelSelector() {
         console.error('Failed to load models:', error);
     }
 }
-populateModelSelector();
 
 // Exit on trash button click
 document.getElementById("trashBtn").addEventListener("click", async function() {

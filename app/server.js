@@ -22,6 +22,18 @@ app.post('/upload-file', upload.single('file'), (req, res) => {
     res.json({ path: req.file.path });
 });
 
+app.get('/detect-vision-models', (req, res) => {
+    const command = 'python';
+    const args = ['detect_vision_models.py'];
+    const child = spawn(command, args, { shell: false });
+    child.on('close', (code) => {
+        res.status(200).end();
+    });
+    child.on('error', (err) => {
+        res.status(500).end('Error executing detect_vision_models.py');
+    });
+});
+
 app.get('/run-script', (req, res) => {
     const model_name = req.query.model_name || '';
     const prompt = req.query.prompt || '';
